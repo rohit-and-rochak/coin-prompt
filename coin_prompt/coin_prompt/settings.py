@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [host.strip() for host in env.str("ALLOWED_HOSTS").split(',')]
 # Application definition
 
 INSTALLED_APPS = [
+    'base.apps.BaseConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,6 +93,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = "base.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
