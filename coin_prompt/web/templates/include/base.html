@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="{% static 'images/favicon.png' %}" rel="icon">
+
+        <title>Document</title>
+        <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+        <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        {% block custom_css %}{% endblock %}
+    </head>
+    <body>
+    {% include "include/header.html" %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% include "include/footer.html" %}
+
+    <script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block custom_js %}{% endblock %}
+    </body>
+</html>
+
