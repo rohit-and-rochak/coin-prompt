@@ -1,0 +1,110 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
+:root{
+    --primary-color: #005377;
+    --secondary-color: #2D3142;
+}
+body{
+    background-color: rgb(26 72 142 / 7%);;
+    font-family: Poppins, sans-serif;
+    font-size:14px;
+    width: 100vw;
+    color:var(--secondary-color);
+}
+@media (min-width: 576px){
+
+    body{
+        font-size: 16px;
+    }
+}
+#logo{
+    font-size: 1.2rem !important;
+    color: var(--primary-color);
+}
+#top-nav{
+    background-color: white;
+}
+#coins-listing{
+    background-color: white;
+    height: 80vh;
+    border-radius: 20px;
+}
+.coins-container{
+    height: 90%;
+    overflow-y: scroll;
+}
+.coins-container::-webkit-scrollbar{
+    display: none;
+}
+#coins-listing::-webkit-scrollbar {
+    display: none;
+}
+#active-alerts{
+    background-color: white;
+    border-radius: 20px;
+    height: 80vh;
+}
+
+#active-alerts img{
+    max-width: 250px;
+    height: auto;
+}
+
+.coin-display-card{
+    box-shadow: 0 8px 30px #707f9714;
+    border-radius: 5px;
+}
+
+.set-alert-button{
+    cursor: pointer;
+    top:0;
+    right: 0;
+    border-radius:5px ;
+    z-index: 999;
+    width: 0px;
+    visibility: hidden;
+    height: 100%;
+    transition: all 0.2s linear;
+}
+
+.uptrend{
+    color: rgb(94, 235, 113);
+}
+.downtrend{
+    color: red;
+}
+
+#set-alerts-overlay{
+    top: 0;
+    right:0;
+    border-radius: 20px;
+    padding: 2em;
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    transition: all 0.3s ease-in;
+}
+
+.active-alert-card{
+    box-shadow: 0 8px 30px #707f9714;
+    padding: 1em 0.5em;
+    border-radius: 20px;
+}
+.alert-delete{
+    transition: transform .2s ease-in;
+}
+.alert-delete:hover{
+    transition: transform .2s ease-out;
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
+.active-alerts-container{
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+}
+.active-alerts-container::-webkit-scrollbar{
+    display: none;
+}
