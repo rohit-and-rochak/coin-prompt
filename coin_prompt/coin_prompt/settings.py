@@ -172,3 +172,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# WAZIRX
+
+WAZIRX_API_ALL = 'https://api.wazirx.com/sapi/v1/tickers/24hr'
+WAZIRX_API_COIN = 'https://api.wazirx.com/sapi/v1/ticker/24hr?symbol={}'
