@@ -35,3 +35,15 @@ for(let button of alertButton){
         // coinList.style.overflowY='hidden';
     })
 }
+
+function ajax_request(method, url, data, token)
+{
+    return $.ajax({
+        type: method,
+        url: url,
+        headers: {'X-CSRFToken': token},
+        data: data,
+        dataType: 'json'
+    });
+
+}

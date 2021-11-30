@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     'coin',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-
+    'allauth.socialaccount'
 ]
 
 MIDDLEWARE = [

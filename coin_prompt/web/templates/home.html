@@ -81,11 +81,13 @@
                                         <span class="downtrend">{{ coin.change|abs }} % <i class="fas fa-long-arrow-alt-down"></i></span>
                                     {% endif %}
                                 </div>
-                                <div class="set-alert-button position-absolute bg-danger text-white">
-                                    <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">
-                                        Set Alert
-                                    </p>
-                                </div>
+                                {% if request.user.is_authenticated %}
+                                    <div class="set-alert-button position-absolute bg-danger text-white">
+                                        <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">
+                                            Set Alert
+                                        </p>
+                                    </div>
+                                {% endif %}
                             </div>
                             {% endfor %}
                         {% else %}
@@ -131,31 +133,53 @@
 {% endblock %}
 {% block custom_js %}
 <script>
-    $(document).ready(function () {
-        $( '#coins-searchable-container' ).searchable({
-            searchField: '#search-coin',
-            selector: 'div.coin-display-card',
-            childSelector: '.card-searchable-item',
-            show: function( elem ) {
-                elem.fadeIn(250);
-            },
-            hide: function( elem ) {
-                elem.fadeOut(250);
-            },
-            clearOnLoad: true
-        });
+    $( '#coins-searchable-container' ).searchable({
+        searchField: '#search-coin',
+        selector: 'div.coin-display-card',
+        childSelector: '.card-searchable-item',
+        show: function( elem ) {
+            elem.fadeIn(250);
+        },
+        hide: function( elem ) {
+            elem.fadeOut(250);
+        },
+        clearOnLoad: true
+    });
 
-        $('.alert-button').click(function (e) {
-            const coin_id = $(this).attr('data-coin-id');
-            const img_src = $(`img[data-coin-id=${coin_id}]`).attr('src');
-            const price_div = $(`div.last-price[data-coin-id=${coin_id}]`);
-            $('span#selected-coin').html(coin_id);
-            $('#selected-coin-icon').attr('src', img_src);
+    $('#activate-alert').click(function(){
+        let data = {};
+        data['coin'] = $('input[name="selected-coin"]').val();
+        data['base_price'] = parseFloat($('input[name="selected-coin-price"]').val());
+        data['target_price'] = parseFloat($('#set-alert-target-price').val());
 
-            $('input[name="selected-coin"]').val(coin_id);
-            $('input[name="selected-coin-price"]').val(price_div.attr('data-coin-price'));
-            $('#selected-coin-price').html(price_div.html());
-        });
+        const radio_id = $('input[name="set-alert-type"]:checked')[0].id;
+        if(radio_id == 'price-at'){
+            data['relation'] = '=';
+        }
+        else if(radio_id == 'price_up'){
+            data['relation'] = '>=';
+        }
+        else if(radio_id == 'price_down'){
+            data['relation'] = '<=';
+        }
+
+        const token = "{{ csrf_token }}";
+        if(Number.isNaN(data['base_price']) || Number.isNaN(data['target_price'])){
+            alert('The price must be a valid number');
+        }
+        else{
+            ajax_request('POST', '{% url "create-alert" %}', data, token)
+            .done(function(res){
+                alert('Alert created successfully');
+                location.reload();
+            })
+            .fail(function(data){
+                $('body').scrollTop(0);
+                alert(data['error']);
+            });
+        }
+
+
     });
 </script>
 {% endblock %}
