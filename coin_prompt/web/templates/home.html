@@ -48,8 +48,7 @@
                     </div>
                 </div>
                 <div class="input-group w-100">
-                    <input type="text" name="search-coin" id="search-coin" class="form-control"
-                        placeholder="Search coin...">
+                    <input type="search" id="search-coin" class="form-control" placeholder="Search coin...">
                     <i class="fa fa-search input-group-text pt-2"></i>
                 </div>
                 <br>
@@ -58,14 +57,14 @@
                     <div class="col-4 text-center">Price</div>
                     <div class="col-4 text-end">24hrs change(%)</div>
                 </div>
-                <div class="coins-container container">
+                <div class="coins-container container" id="coins-searchable-container">
                     {% for id,coin in coins.items %}
                     <div class="coin-display-card row mx-1 my-3 py-3 position-relative">
-                        <div class="col-4"><img data-coin-id="{{ id }}" src="{% static  coin.icon %}"
+                        <div class="col-4 card-searchable-item"><img data-coin-id="{{ id }}" src="{% static  coin.icon %}"
                                 onerror="this.onerror=null; this.src='{% static generic_icon %}';" />
                             <span class="ml-2">{{ id }}</span>
                         </div>
-                        <div class="col-4 col-sm-4 last-price" data-coin-id="{{ id }}" data-coin-price="{{ coin.price }}">{{ coin.price|inr }}</div>
+                        <div class=" col-4 col-sm-4 last-price" data-coin-id="{{ id }}" data-coin-price="{{ coin.price }}">{{ coin.price|inr }}</div>
                         <div class="col-4 col-sm-4 fw-bold text-end">
                             {% if coin.change > 0 %}
                                 <span class="uptrend">{{ coin.change }} % <i class="fas fa-long-arrow-alt-up"></i></span>
@@ -74,7 +73,8 @@
                             {% endif %}
                         </div>
                         <div class="set-alert-button position-absolute bg-danger text-white">
-                            <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">Set Alert
+                            <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">
+                                Set Alert
                             </p>
                         </div>
                     </div>
@@ -120,6 +120,18 @@
 {% block custom_js %}
 <script>
     $(document).ready(function () {
+        $( '#coins-searchable-container' ).searchable({
+            searchField: '#search-coin',
+            selector: 'div.coin-display-card',
+            childSelector: '.card-searchable-item',
+            show: function( elem ) {
+                elem.fadeIn(250);
+            },
+            hide: function( elem ) {
+                elem.fadeOut(250);
+            }
+        });
+
         $('.alert-button').click(function (e) {
             const coin_id = $(this).attr('data-coin-id');
             const img_src = $(`img[data-coin-id=${coin_id}]`).attr('src');
