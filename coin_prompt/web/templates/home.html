@@ -118,7 +118,7 @@
                                                 <span class="small opacity-75">Target Price</span><br>
                                                 <span class="mt-2">{{ alert.target_price|strip_zero }}</span>
                                             </div>
-                                            <div class="alert-delete mx-4" data-coin-id="{{ alert.coin.name }}">
+                                            <div id="alert-delete" class="alert-delete mx-4" data-coin-id="{{ alert.coin.name }}">
                                                 <i class="far fa-trash-alt text-danger"></i>
                                             </div>
                                         </div>
@@ -180,8 +180,23 @@
                 alert(data['error']);
             });
         }
-
-
     });
+
+    $('#alert-delete').click(function(){
+            console.log('clicked');
+            const coin_id = $(this).attr('data-coin-id');
+            const data = {'coin': coin_id};
+            const token = "{{ csrf_token }}";
+
+            ajax_request('POST', '{% url "delete-alert" %}', data, token)
+            .done(function(res){
+                alert('Alert deleted successfully');
+                location.reload();
+            })
+            .fail(function(data){
+                $('body').scrollTop(0);
+                alert(data['error']);
+            });
+        });
 </script>
 {% endblock %}
