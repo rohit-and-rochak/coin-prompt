@@ -19,3 +19,7 @@ class Coin(BaseModel):
             price['price'] = result['lastPrice']
 
         return price
+
+    @property
+    def logo(self):
+        return f'/images/icons/{self.name.lower()}.png'
