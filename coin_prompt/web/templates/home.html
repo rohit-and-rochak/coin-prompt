@@ -16,6 +16,7 @@
                                         <img id="selected-coin-icon" src=""
                                             onerror="this.onerror=null; this.src='{% static generic_icon %}'" />
                                         <input type="hidden" name="selected-coin" value="">
+                                        <input type="hidden" name="selected-coin-price" value="">
                                         <span id="selected-coin"></span>
                                     </div>
                                     Current Price: <span id="selected-coin-price"></span>
@@ -35,6 +36,13 @@
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         decreases by
                                     </label>
+                                </div>
+                                <div id="price-ratio-container" class="my-3 d-none">
+                                    <button type="button" class="price-ratio" data-change="5">5%</button>
+                                    <button type="button" class="price-ratio" data-change="10">10%</button>
+                                    <button type="button" class="price-ratio" data-change="25">25%</button>
+                                    <button type="button" class="price-ratio" data-change="50">50%</button>
+                                    <input type="text" id="price-ratio-text" value="" placeholder="Ex 15%">
                                 </div>
                                 <div class="my-3">
                                     <label for="set-alert-target-price" class="form-label">Target Price</label>
@@ -140,11 +148,13 @@
         $('.alert-button').click(function (e) {
             const coin_id = $(this).attr('data-coin-id');
             const img_src = $(`img[data-coin-id=${coin_id}]`).attr('src');
-            const price = $(`div.last-price[data-coin-id=${coin_id}]`).html()
+            const price_div = $(`div.last-price[data-coin-id=${coin_id}]`);
             $('span#selected-coin').html(coin_id);
-            $('input[name="selected-coin"]').val(coin_id);
             $('#selected-coin-icon').attr('src', img_src);
-            $('#selected-coin-price').html(price);
+
+            $('input[name="selected-coin"]').val(coin_id);
+            $('input[name="selected-coin-price"]').val(price_div.attr('data-coin-price'));
+            $('#selected-coin-price').html(price_div.html());
         });
     });
 </script>
