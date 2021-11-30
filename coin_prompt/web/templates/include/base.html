@@ -22,8 +22,9 @@
         {% block content %}{% endblock %}
 
         {% include "include/footer.html" %}
-        <script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery.searchable.js' %}"></script>
         <script src="{% static 'js/app.js' %}"></script>
         {% block custom_js %}{% endblock %}
     </body>
