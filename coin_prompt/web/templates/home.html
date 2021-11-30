@@ -7,79 +7,83 @@
         <div class="d-flex flex-wrap gap-4">
             <!-- Coins listing column -->
             <div id="coins-listing" class="d-flex flex-column p-4 p-sm-5 position-relative flex-grow-1">
-                <div id="set-alerts-overlay" class="bg-white position-absolute">
-                    <div class="container">
-                        <button class="btn btn-warning">&times;</button>
-                        <form action="">
-                            <div class="my-3">
-                                <div class="col-5 col-sm-6 h3">
-                                    <img id="selected-coin-icon" src=""
-                                        onerror="this.onerror=null; this.src='{% static generic_icon %}'" />
-                                    <input type="hidden" name="selected-coin" value="">
-                                    <span id="selected-coin"></span>
+                    <div id="set-alerts-overlay" class="bg-white position-absolute">
+                        <div class="container">
+                            <button class="btn btn-warning">&times;</button>
+                            <form action="">
+                                <div class="my-3">
+                                    <div class="col-5 col-sm-6 h3">
+                                        <img id="selected-coin-icon" src=""
+                                            onerror="this.onerror=null; this.src='{% static generic_icon %}'" />
+                                        <input type="hidden" name="selected-coin" value="">
+                                        <span id="selected-coin"></span>
+                                    </div>
+                                    Current Price: <span id="selected-coin-price"></span>
                                 </div>
-                                Current Price: <span id="selected-coin-price"></span>
-                            </div>
-                            <div class="mb-3">
-                                <span>When price </span>
-                                <input class="form-check-input" type="radio" name="set-alert-type" id="price-at"
-                                    checked>
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    at
-                                </label>
-                                <input class="form-check-input" type="radio" name="set-alert-type" id="price-up">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    increases by
-                                </label>
-                                <input class="form-check-input" type="radio" name="set-alert-type" id="price-down">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    decreases by
-                                </label>
-                            </div>
-                            <div class="my-3">
-                                <label for="set-alert-target-price" class="form-label">Target Price</label>
-                                <input type="text" class="form-control" id="set-alert-target-price"
-                                    name="set-alert-target-price" placeholder="enter target price.">
-                            </div>
-                            <div class="my-3 text-center">
-                                <button class="btn btn-success" type="submit">Activate Alert</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="input-group w-100">
-                    <input type="search" id="search-coin" class="form-control" placeholder="Search coin...">
-                    <i class="fa fa-search input-group-text pt-2"></i>
-                </div>
-                <br>
-                <div class="row opacity-75 mx-1">
-                    <div class="col-4">Coin</div>
-                    <div class="col-4 text-center">Price</div>
-                    <div class="col-4 text-end">24hrs change(%)</div>
-                </div>
-                <div class="coins-container container" id="coins-searchable-container">
-                    {% for id,coin in coins.items %}
-                    <div class="coin-display-card row mx-1 my-3 py-3 position-relative">
-                        <div class="col-4 card-searchable-item"><img data-coin-id="{{ id }}" src="{% static  coin.icon %}"
-                                onerror="this.onerror=null; this.src='{% static generic_icon %}';" />
-                            <span class="ml-2">{{ id }}</span>
-                        </div>
-                        <div class=" col-4 col-sm-4 last-price" data-coin-id="{{ id }}" data-coin-price="{{ coin.price }}">{{ coin.price|inr }}</div>
-                        <div class="col-4 col-sm-4 fw-bold text-end">
-                            {% if coin.change > 0 %}
-                                <span class="uptrend">{{ coin.change }} % <i class="fas fa-long-arrow-alt-up"></i></span>
-                            {% else %}
-                                <span class="downtrend">{{ coin.change|abs }} % <i class="fas fa-long-arrow-alt-down"></i></span>
-                            {% endif %}
-                        </div>
-                        <div class="set-alert-button position-absolute bg-danger text-white">
-                            <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">
-                                Set Alert
-                            </p>
+                                <div class="mb-3">
+                                    <span>When price </span>
+                                    <input class="form-check-input" type="radio" name="set-alert-type" id="price-at"
+                                        checked>
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        at
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="set-alert-type" id="price-up">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        increases by
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="set-alert-type" id="price-down">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        decreases by
+                                    </label>
+                                </div>
+                                <div class="my-3">
+                                    <label for="set-alert-target-price" class="form-label">Target Price</label>
+                                    <input type="text" class="form-control" id="set-alert-target-price"
+                                        name="set-alert-target-price" placeholder="enter target price.">
+                                </div>
+                                <div class="my-3 text-center">
+                                    <button class="btn btn-success" type="submit">Activate Alert</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
+                    <div class="input-group w-100">
+                        <input type="text" id="search-coin" class="form-control" placeholder="Search coin...">
+                        <i class="fa fa-search input-group-text pt-2"></i>
+                    </div>
+                    <br>
+                    <div class="row opacity-75 mx-1">
+                        <div class="col-4">Coin</div>
+                        <div class="col-4 text-center">Price</div>
+                        <div class="col-4 text-end">24hrs change(%)</div>
+                    </div>
+                    <div class="coins-container container" id="coins-searchable-container">
+                        {% if coins|length > 0 %}
+                            {% for id,coin in coins.items %}
+                            <div class="coin-display-card row mx-1 my-3 py-3 position-relative">
+                                <div class="col-4 card-searchable-item"><img data-coin-id="{{ id }}" src="{% static  coin.icon %}"
+                                        onerror="this.onerror=null; this.src='{% static generic_icon %}';" />
+                                    <span class="ml-2">{{ id }}</span>
+                                </div>
+                                <div class=" col-4 col-sm-4 last-price" data-coin-id="{{ id }}" data-coin-price="{{ coin.price }}">{{ coin.price|inr }}</div>
+                                <div class="col-4 col-sm-4 fw-bold text-end">
+                                    {% if coin.change > 0 %}
+                                        <span class="uptrend">{{ coin.change }} % <i class="fas fa-long-arrow-alt-up"></i></span>
+                                    {% else %}
+                                        <span class="downtrend">{{ coin.change|abs }} % <i class="fas fa-long-arrow-alt-down"></i></span>
+                                    {% endif %}
+                                </div>
+                                <div class="set-alert-button position-absolute bg-danger text-white">
+                                    <p data-coin-id="{{ id }}" class="text-center mt-3 text-uppercase alert-button">
+                                        Set Alert
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="mt-5 h5 fw-normal text-center">There occurred an error. Please try again later</div>
+                        {% endif %}
+                    </div>
             </div>
             <!-- Alerts Display Column -->
             <div id="active-alerts" class="p-5 flex-grow-1">
@@ -129,7 +133,8 @@
             },
             hide: function( elem ) {
                 elem.fadeOut(250);
-            }
+            },
+            clearOnLoad: true
         });
 
         $('.alert-button').click(function (e) {
