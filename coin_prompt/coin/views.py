@@ -8,20 +8,25 @@ from .models import Alert, Coin
 @require_POST
 @login_required
 def create_alert(request):
+
     if request.is_ajax:
         data = request.POST
         user = request.user
         coin = Coin.objects.filter(name=data.get('coin')).first()
-        if coin:
+
+        if not coin:
+            return JsonResponse({'error': f'Coin {data.get("coin")} not found'}, status=500)
+        else:
             alert = {'user': user, 'coin': coin}
             alert['base_price'] = data.get('base_price')
             alert['target_price'] = data.get('target_price')
             alert['relation'] = data.get('relation')
-            Alert.create_alert(alert)
+            created = Alert.create_alert(alert)
+
+            if not created:
+                return JsonResponse({'error': 'There occurred an error while creating the alert'}, status=500)
 
             return JsonResponse({'data': {}}, status=200)
-        else:
-            return JsonResponse({'error': f'Coin {data.get("coin")} not found'}, status=500)
 
     return JsonResponse({'error': 'Invalid Request'}, status=500)
 

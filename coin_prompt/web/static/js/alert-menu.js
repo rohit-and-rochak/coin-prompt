@@ -21,7 +21,6 @@ $('input[name="set-alert-type"]').click(function(){
     else{
         price_ratio_container.removeClass('d-none');
         const base_price = $('input[name="selected-coin-price"]').val();
-        console.log(base_price);
         $('#set-alert-target-price').val(base_price);
     }
 });

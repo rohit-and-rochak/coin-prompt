@@ -21,10 +21,12 @@ class Alert(BaseModel):
 
     @staticmethod
     def create_alert(data):
+        created = False
         try:
             alert = Alert(**data)
             alert.save()
-            return True
+            created = True
         except Exception as e:
             print(e)
-            return False
+        finally:
+            return created

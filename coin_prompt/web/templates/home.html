@@ -104,7 +104,7 @@
                     </div>
                 {% else %}
                     <h3 class="h4 mb-4">Active Alerts <i class="fas fa-bell"></i></h3>
-                    <div class="container active-alerts-container d--flex flex-column p-3">
+                    <div class="container active-alerts-container d-flex flex-column p-3">
                         {% for alert in alerts %}
                             <div class="active-alert-card w-100 mt-3">
                                 <div class="container d-flex align-items-center">
@@ -155,13 +155,14 @@
         data['target_price'] = parseFloat($('#set-alert-target-price').val());
 
         const radio_id = $('input[name="set-alert-type"]:checked')[0].id;
+
         if(radio_id == 'price-at'){
             data['relation'] = '=';
         }
-        else if(radio_id == 'price_up'){
+        else if(radio_id == 'price-up'){
             data['relation'] = '>=';
         }
-        else if(radio_id == 'price_down'){
+        else if(radio_id == 'price-down'){
             data['relation'] = '<=';
         }
 
@@ -175,15 +176,14 @@
                 alert('Alert created successfully');
                 location.reload();
             })
-            .fail(function(data){
+            .fail(function(err){
                 $('body').scrollTop(0);
-                alert(data['error']);
+                alert(err.responseJSON.error);
             });
         }
     });
 
     $('#alert-delete').click(function(){
-            console.log('clicked');
             const coin_id = $(this).attr('data-coin-id');
             const data = {'coin': coin_id};
             const token = "{{ csrf_token }}";
@@ -193,9 +193,9 @@
                 alert('Alert deleted successfully');
                 location.reload();
             })
-            .fail(function(data){
+            .fail(function(err){
                 $('body').scrollTop(0);
-                alert(data['error']);
+                alert(err.responseJSON.error);
             });
         });
 </script>
