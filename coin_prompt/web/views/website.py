@@ -1,27 +1,43 @@
 import requests
 
-from django.shortcuts import render
 from django.conf import settings
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
 
-from coin.models import Alert
+
+@login_required
+def logout_user(request):
+    logout(request)
+    redirect_url = '/login/'
+    response = redirect(redirect_url)
+
+    if not request.user.is_authenticated:
+        for cookie in request.COOKIES:
+            response.delete_cookie(cookie)
+        request.session.flush()
+
+    return response
 
 
-def home(request):
-    endpoint = settings.WAZIRX_API_ALL
-    response = requests.get(endpoint)
-    coins = {}
-    if response.ok:
-        for coin in response.json():
-            if coin['quoteAsset'] == 'inr':
-                name = coin['baseAsset']
-                change = round((float(coin['lastPrice']) - float(coin['openPrice'])) / float(coin['openPrice']), 3)
-                price = coin['lastPrice']
-                coins[name.upper()] = {'price': price, 'change': change, 'icon': 'images/icons/{}.png'.format(name)}
+@login_required
+def profile(request):
+    return render(request, 'account/profile.html')
 
-    context = {'coins': coins}
 
-    if request.user.is_authenticated:
-        alerts = Alert.objects.filter(user=request.user)
-        context['alerts'] = alerts
+@require_POST
+@login_required
+def update_profile(request):
+    if request.is_ajax:
+        user = request.user
+        data = request.POST
+        for key in data.keys():
+            setattr(user, key, data[key])
 
-    return render(request, 'home.html', context)
+        user.save()
+        return JsonResponse({'data': None}, status=200)
+
+    return JsonResponse({'error': 'There occurred an error'}, status=500)
+
