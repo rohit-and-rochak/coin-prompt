@@ -1,0 +1,23 @@
+input[name='login']
+{
+    margin-left: 22px;
+}
+
+.errorlist{
+    color: red;
+}
+
+input[name='email']
+{
+    margin-left: 100px;
+}
+
+input[name='password1']
+{
+    margin-left: 75px;
+}
+
+input[name='password2']
+{
+    margin-left: 10px;
+}
