@@ -1,0 +1,54 @@
+{% extends "include/base.html" %}
+
+{% block content %}
+<section class="ftco-section">
+    <div class="container mt-3 p-3 bg-white">
+        <form id="client_profile" method="POST">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>First Name</label>
+                    <input class="form-control" type="text" name="first_name" value="{{request.user.first_name}}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Last Name</label>
+                    <input class="form-control" type="text" name="last_name" value="{{request.user.last_name}}">
+                </div>
+                <div class="form-group col-md-12 mt-2">
+                    <label>Email</label>
+                    <input class="form-control" value="{{ request.user.email }}" type="email" name="email" readonly>
+                </div>
+            </div>
+            <br/><br/>
+            <div class="form-group col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</section>
+<hr>
+{% endblock %}
+{% block custom_js %}
+<script>
+    $('form#client_profile').off().on('submit', function(e){
+        e.preventDefault();
+        const form = $(this).serializeArray();
+        let data = {}
+        for(const ob of form){
+            if(ob.value != ''){
+                data[ob.name] = ob.value;
+            }
+        }
+        console.log(data);
+        const token = "{{ csrf_token }}";
+        ajax_request('POST', '{% url "update-profile" %}', data, token).done(function(res){
+			alert('Profile updated');
+			location.reload();
+		}).fail(function(data){
+			const response = data.responseJSON;
+			$('body').scrollTop(0);
+			show_error_message(response['error']);
+		});
+
+    });
+</script>
+{% endblock %}

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'coin',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount'
+    'allauth.socialaccount',
+    'background_task'
 ]
 
 MIDDLEWARE = [
@@ -105,14 +106,13 @@ DATABASES = {
 
 
 EMAIL_BACKEND = env.str('EMAIL_BACKEND')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_HOST = env.str('EMAIL_HOST')
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
 EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
 DEFAULT_REPLY_TO_EMAIL = env.str('DEFAULT_REPLY_TO_EMAIL')
-EMAIL_VAULT = env.str('EMAIL_VAULT')
 
 
 # Password validation

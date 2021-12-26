@@ -1,5 +1,6 @@
 Django==3.2.7
 django-allauth==0.45.0
+django-background-tasks==1.2.5
 django-environ==0.7.0
 djangorestframework==3.12.4
 psycopg2==2.8.5

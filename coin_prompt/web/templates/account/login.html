@@ -1,0 +1,43 @@
+{% extends "include/base.html" %}
+
+{% load static %}
+{% load account socialaccount %}
+
+{% block custom_css %}
+  <link rel="stylesheet" href="{% static 'css/account.css'%}">
+{% endblock %}
+
+{% block content %}
+<section id="entity" class="ftco-section">
+	<div class="container">
+		<div class="section-title">
+			<h2>Sign In</h2>
+		</div>
+
+		{% include "socialaccount/snippets/login_extra.html" %}
+		<div class="row login-form shadow bg-white">
+			<div class="col-lg-12 d-lg-flex flex-lg-column mt-5 mb-5">
+				<form method="POST" id="login_form" class="form-group" action="{% url 'account_login' %}">
+					{% csrf_token %}
+					{{ form.as_p }}
+					{% if redirect_field_value %}
+						<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+					<div class="message-holder">
+						<div class="submit_loader"></div>
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+				<p><a href="/signup/">Not a registered user? Register now</a></p>
+         	</div>
+      	</div>
+	</div>
+</section>
+{% endblock %}
+{% block customjs %}
+<script>
+   $('#login_form').on('submit',function() {
+    $('.submit_loader').css('display','block');
+  });
+</script>
+{% endblock %}

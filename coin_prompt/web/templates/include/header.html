@@ -1,11 +1,30 @@
 <!-- Top navbar  -->
+{% block custom_css %}
+    <style>
+        ul.navbar-nav {
+            display: flex;
+            flex-direction: row;
+        }
+        li.nav-item{
+            padding: 0px 10px 0px 10px;
+        }
+    </style>
+{% endblock %}
 <nav id="top-nav" class="w-100 px-2 px-sm-0">
     <div class="container d-flex justify-content-between align-items-center p-3">
         <div id="logo">
-        <p class="text-uppercase fw-bold">coin prompt</p>
+            <p class="text-uppercase fw-bold"><a href="/" class="text-decoration-none">coin prompt</a></p>
         </div>
         <div id="profile-display">
-        <a href="#"><i class="far fa-user-circle fa-2x"></i></a>
+            <ul class="navbar-nav">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="#">Hi, {{ request.user.first_name }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile'%}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle fa-2x"></i> Login/Signup</a></li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>

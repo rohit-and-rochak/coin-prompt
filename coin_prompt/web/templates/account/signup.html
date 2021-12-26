@@ -1,0 +1,34 @@
+{% extends "include/base.html" %}
+
+{% load static %}
+{% load account socialaccount %}
+
+{% block custom_css %}
+  <link rel="stylesheet" href="{% static 'css/account.css'%}">
+{% endblock %}
+
+{% block content %}
+  <section id="entity" class="ftco-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Sign Up</h2>
+      </div>
+      <div class="login-form border p-4 bg-white">
+        <div class="col-lg-6" style="margin:auto">
+          <form class="form-group" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Sign Up &raquo;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block custom_js %}
+{% endblock %}
