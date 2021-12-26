@@ -38,11 +38,19 @@
                                     </label>
                                 </div>
                                 <div id="price-ratio-container" class="my-3 d-none">
-                                    <button type="button" class="price-ratio" data-change="5">5%</button>
-                                    <button type="button" class="price-ratio" data-change="10">10%</button>
-                                    <button type="button" class="price-ratio" data-change="25">25%</button>
-                                    <button type="button" class="price-ratio" data-change="50">50%</button>
-                                    <input type="text" id="price-ratio-text" value="" placeholder="Ex 15%">
+                                    <div class="col-12">
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="5">5%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="10">10%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="15">15%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="20">20%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="25">25%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="50">50%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="75">75%</button>
+                                        <button type="button" class="price-ratio btn btn-outline-primary" data-change="100">100%</button>
+                                    </div>
+                                    <div class="col-12 mt-1">
+                                        <input type="text" id="price-ratio-text" class="form-control" value="" placeholder="Ex 15%">
+                                    </div>
                                 </div>
                                 <div class="my-3">
                                     <label for="set-alert-target-price" class="form-label">Target Price</label>
@@ -112,7 +120,7 @@
                                         <img src="{% static alert.coin.logo %}">
                                     </div>
                                     <div class="alert-details d-flex justify-content-between flex-grow-1">
-                                        <div class="alert-coin-name"><span class="h5">{{ alert.coin.name }}</span><br><span>{{ alert.base_price|strip_zero }}</span></div>
+                                        <div class="alert-coin-name"><span class="h5">{{ alert.coin.name }}</span><br><span>{{ coins|get_coin_value:alert.coin.name }}</span></div>
                                         <div class="alert-coin-target d-flex align-items-center">
                                             <div class="target-price">
                                                 <span class="small opacity-75">Target Price</span><br>

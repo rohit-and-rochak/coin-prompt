@@ -23,3 +23,10 @@ def strip_zero(value):
         return str(value).rstrip('0')
     else:
         return round(value, 2)
+
+
+@register.filter
+def get_coin_value(d, coin_name):
+    coin = d.get(coin_name)
+    if coin:
+        return coin['price']
