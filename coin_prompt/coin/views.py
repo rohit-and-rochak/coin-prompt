@@ -4,6 +4,8 @@ from django.views.decorators.http import require_POST
 
 
 from .models import Alert, Coin
+from web.tasks import check_alert_trigger
+
 
 @require_POST
 @login_required
@@ -21,10 +23,12 @@ def create_alert(request):
             alert['base_price'] = data.get('base_price')
             alert['target_price'] = data.get('target_price')
             alert['relation'] = data.get('relation')
-            created = Alert.create_alert(alert)
+            id = Alert.create_alert(alert)
 
-            if not created:
+            if not id:
                 return JsonResponse({'error': 'There occurred an error while creating the alert'}, status=500)
+
+            check_alert_trigger(id, repeat=10, repeat_until=None)
 
             return JsonResponse({'data': {}}, status=200)
 

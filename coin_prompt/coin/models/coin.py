@@ -1,3 +1,4 @@
+from decimal import Decimal
 import requests
 
 from base.models import BaseModel
@@ -9,14 +10,13 @@ from django.db import models
 class Coin(BaseModel):
     name = models.CharField(max_length=50)
 
-    @staticmethod
-    def get_price(coin):
-        endpoint = settings.WAZIRX_API_COIN.format(coin)
+    def get_price(self):
+        endpoint = settings.WAZIRX_API_COIN.format(self.name.lower())
         response = requests.get(endpoint)
         price = {}
         if response.ok:
             result = response.json()
-            price['price'] = result['lastPrice']
+            price['price'] = Decimal(result['lastPrice'])
 
         return price
 

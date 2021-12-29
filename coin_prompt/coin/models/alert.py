@@ -21,12 +21,17 @@ class Alert(BaseModel):
 
     @staticmethod
     def create_alert(data):
-        created = False
+        id = None
         try:
             alert = Alert(**data)
             alert.save()
-            created = True
+            id = alert.id
         except Exception as e:
             print(e)
         finally:
-            return created
+            return id
+
+    def email_template(self):
+        subject = f"{self.coin.name} just reached target price of {self.target_price}"
+        body = f"Hey {self.user.first_name}!!. Your Alert for {self.coin.name} registered on {self.created_at} just reached the target price of {self.target_price}."
+        return {'subject': subject, 'body': body}

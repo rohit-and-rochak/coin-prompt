@@ -178,3 +178,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 WAZIRX_API_ALL = 'https://api.wazirx.com/sapi/v1/tickers/24hr'
 WAZIRX_API_COIN = 'https://api.wazirx.com/sapi/v1/ticker/24hr?symbol={}'
+
+
+BACKGROUND_TASK_RUN_ASYNC = True
